@@ -1,0 +1,27 @@
+{
+  "name": "ctr",
+  "version": "0.1.0",
+  "description": "Code constructor for JavaScript.",
+  "main": "main.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "node tests/tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/uhop/ctr.git"
+  },
+  "keywords": [
+    "code generation",
+    "code construction",
+    "templating",
+    "templates",
+    "template"
+  ],
+  "author": "Eugene Lazutkin <eugene.lazutkin@gmail.com> (http://lazutkin.com/)",
+  "license": "BSD"
+}
