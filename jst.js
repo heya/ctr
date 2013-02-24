@@ -1,12 +1,12 @@
 (function(factory){
 	if(typeof define != "undefined"){ // AMD
-		define([], factory);
+		define(["./Target"], factory);
 	}else if(typeof module != "undefined"){ // node.js
-		module.exports = factory();
+		module.exports = factory(require("./Target"));
 	}else{
-		ctrJst = factory();
+		ctrJst = factory(ctrTarget);
 	}
-})(function(){
+})(function(Target){
 	"use strict";
 
 	var escapeTable = {
@@ -27,6 +27,8 @@
 	}
 
 	function jst(tmpl){
+		tmpl = tmpl instanceof Array ? tmpl.join("\n") :
+			(tmpl.getCode ? tmpl.getCode() : tmpl);
 		var result = [
 			"(function(){",
 			"    var __r = []; print = function(text){ __r.push(text); };",
@@ -54,14 +56,9 @@
 			"    return __r.join(\"\");",
 			"})"
 		);
-		return result;
+		return new Target(result);
 	}
 
-	function compile(tmpl, env){
-		return evalWithEnv(env || {})(jst(tmpl).join("\n"));
-	}
-
-	jst.compile = compile;
 	jst.escape  = escape;
 
 	return jst;

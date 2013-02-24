@@ -147,7 +147,7 @@ var tests = [
 					args: "",
 					body: "return 'Hello, world!';"
 				}
-			).join("\n");
+			).getCode();
 		submit("Hello, world #1", text ===
 				"(function(){\n" +
 				"    return 'Hello, world!';\n" +
@@ -169,7 +169,7 @@ var tests = [
 							"return c;"
 						]
 				}
-			).join("\n");
+			).getCode();
 		submit("Hello, world #2", text ===
 				"(function(a, b){\n" +
 				"    var c = a + b;\n" +
@@ -179,56 +179,43 @@ var tests = [
 	},
 	// JST tests
 	function(){
-		var text = jst.compile(
-				[
+		var text = jst([
 					"Hello, <%= name %>!"
-				].join("\n"),
-				{
+				]).compile({
 					name: "world"
-				}
-			)();
+				})();
 		submit("Hello, world #3", text === "Hello, world!");
 	},
 	function(){
-		var text = jst.compile(
-				[
-					"Hello, Bob's <%= name %>!"
-				].join("\n"),
-				{
+		var text = jst("Hello, Bob's <%= name %>!").compile({
 					name: "world"
-				}
-			)();
+				})();
 		submit("Hello, world #4", text === "Hello, Bob's world!");
 	},
 	function(){
-		var text = jst.compile(
-				[
-					"Hello, <%= name %>!"
-				].join("\n"),
-				{
+		var text = jst("Hello, <%= name %>!").compile({
 					name: "Bob's world"
-				}
-			)();
+				})();
 		submit("Hello, world #5", text === "Hello, Bob's world!");
 	},
 	function(){
-		var text = jst.compile(sorryTmpl1, {count: 0})();
+		var text = jst(sorryTmpl1).compile({count: 0})();
 		submit("I am not sorry", text === "I am not sorry.");
 	},
 	function(){
-		var text = jst.compile(sorryTmpl1, {count: 1})();
+		var text = jst(sorryTmpl1).compile({count: 1})();
 		submit("I am sorry", text === "I am sorry.");
 	},
 	function(){
-		var text = jst.compile(sorryTmpl1, {count: 2})();
+		var text = jst(sorryTmpl1).compile({count: 2})();
 		submit("I am very sorry", text === "I am very sorry.");
 	},
 	function(){
-		var text = jst.compile(sorryTmpl1, {count: 3})();
+		var text = jst(sorryTmpl1).compile({count: 3})();
 		submit("I am very very sorry", text === "I am very very sorry.");
 	},
 	function(){
-		var text = jst.compile(sorryTmpl2, {count: 3})();
+		var text = jst(sorryTmpl2).compile({count: 3})();
 		submit("I am very very sorry", text === "I am very very sorry.");
 	}
 ];

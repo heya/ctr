@@ -1,15 +1,16 @@
 (function(factory){
 	if(typeof define != "undefined"){ // AMD
-		define(["./replace"], factory);
+		define(["./replace", "./Target"], factory);
 	}else if(typeof module != "undefined"){ // node.js
-		module.exports = factory(require("./replace"));
+		module.exports = factory(require("./replace"), require("./Target"));
 	}else{
-		ctr = factory(ctrReplace);
+		ctr = factory(ctrReplace, ctrTarget);
 	}
-})(function(replace){
+})(function(replace, Target){
 	"use strict";
 	return function constructor(tmpl, dict){
-		tmpl = tmpl instanceof Array ? tmpl : tmpl.split("\n");
+		tmpl = tmpl instanceof Array ? tmpl :
+			(tmpl.getCode ? tmpl.getCode(true) : tmpl.split("\n"));
 		var result = [];
 		for(var i = 0, l = tmpl.length; i < l; ++i){
 			var line = replace(tmpl[i], dict),
@@ -34,6 +35,6 @@
 				result.push(line);
 			}
 		}
-		return result;
+		return new Target(result);
 	};
 });
