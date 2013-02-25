@@ -9,8 +9,6 @@
 })(function(evalWithEnv){
 	"use strict";
 
-	var empty = {};
-
 	function Target(lines){
 		this.lines = lines;
 	}
@@ -19,9 +17,9 @@
 		getCode: function(asArray){
 			return asArray ? this.lines : this.lines.join("\n");
 		},
-		compile: function(env){
+		compile: function(env, accessors, binder){
 			var code = this.getCode();
-			return env ? evalWithEnv(env)(code) : eval(code);
+			return env ? evalWithEnv(env, accessors, binder)(code) : eval(code);
 		}
 	};
 
