@@ -82,6 +82,71 @@ var tests = [
 		submit("eval #2", evalWithEnv({a: 1, b: 2})("typeof a + typeof x") === "numberundefined");
 		submit("eval #3", evalWithEnv({a: 1, b: 2})("typeof b + typeof y") === "numberundefined");
 	},
+	function(){
+		var f = evalWithEnv({a: 1, b: 2}, "a b"),
+			g = f("function(c){ return a + b + c; }");
+		submit("eval + default accessors #1", g(3) === 6);
+		submit("eval + default accessors get A", f.closure.getA() === 1);
+		submit("eval + default accessors get B", f.closure.getB() === 2);
+		submit("eval + default accessors set A", f.closure.setA(4) === 4);
+		submit("eval + default accessors #2", g(3) === 9);
+		submit("eval + default accessors set B", f.closure.setB(5) === 5);
+		submit("eval + default accessors #3", g(3) === 12);
+		submit("eval + default accessors get A #2", f.closure.getA() === 4);
+		submit("eval + default accessors get B #2", f.closure.getB() === 5);
+	},
+	function(){
+		var f = evalWithEnv({a: 1, b: 2}, "a b", evalWithEnv.prefixSlot),
+			g = f("function(c){ return a + b + c; }");
+		submit("eval + prefix accessors #1", g(3) === 6);
+		submit("eval + prefix accessors get A", f.closure.getA() === 1);
+		submit("eval + prefix accessors get B", f.closure.getB() === 2);
+		submit("eval + prefix accessors set A", f.closure.setA(4) === 4);
+		submit("eval + prefix accessors #2", g(3) === 9);
+		submit("eval + prefix accessors set B", f.closure.setB(5) === 5);
+		submit("eval + prefix accessors #3", g(3) === 12);
+		submit("eval + prefix accessors get A #2", f.closure.getA() === 4);
+		submit("eval + prefix accessors get B #2", f.closure.getB() === 5);
+	},
+	function(){
+		var f = evalWithEnv({a: 1, b: 2}, "a b", evalWithEnv.inlineSlot),
+			g = f("function(c){ return a + b + c; }");
+		submit("eval + inline accessors #1", g(3) === 6);
+		submit("eval + inline accessors get A", f.closure.a === 1);
+		submit("eval + inline accessors get B", f.closure.b === 2);
+		submit("eval + inline accessors set A", (f.closure.a = 4) === 4);
+		submit("eval + inline accessors #2", g(3) === 9);
+		submit("eval + inline accessors set B", (f.closure.b = 5) === 5);
+		submit("eval + inline accessors #3", g(3) === 12);
+		submit("eval + inline accessors get A #2", f.closure.a === 4);
+		submit("eval + inline accessors get B #2", f.closure.b === 5);
+	},
+	function(){
+		var f = evalWithEnv({a: 1, b: 2}, "a b", evalWithEnv.doubleSlot),
+			g = f("function(c){ return a + b + c; }");
+		submit("eval + double accessors #1", g(3) === 6);
+		submit("eval + double accessors get A", f.closure.a.get() === 1);
+		submit("eval + double accessors get B", f.closure.b.get() === 2);
+		submit("eval + double accessors set A", f.closure.a.set(4) === 4);
+		submit("eval + double accessors #2", g(3) === 9);
+		submit("eval + double accessors set B", f.closure.b.set(5) === 5);
+		submit("eval + double accessors #3", g(3) === 12);
+		submit("eval + double accessors get A #2", f.closure.a.get() === 4);
+		submit("eval + double accessors get B #2", f.closure.b.get() === 5);
+	},
+	function(){
+		var f = evalWithEnv({a: 1, b: 2}, "a b", evalWithEnv.functionSlot),
+			g = f("function(c){ return a + b + c; }");
+		submit("eval + function accessors #1", g(3) === 6);
+		submit("eval + function accessors get A", f.closure.a() === 1);
+		submit("eval + function accessors get B", f.closure.b() === 2);
+		submit("eval + function accessors set A", f.closure.a(4) === 4);
+		submit("eval + function accessors #2", g(3) === 9);
+		submit("eval + function accessors set B", f.closure.b(5) === 5);
+		submit("eval + function accessors #3", g(3) === 12);
+		submit("eval + function accessors get A #2", f.closure.a() === 4);
+		submit("eval + function accessors get B #2", f.closure.b() === 5);
+	},
 	// Pool tests
 	function(){
 		var pool = new Pool;
