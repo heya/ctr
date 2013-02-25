@@ -21,7 +21,7 @@
 		},
 		compile: function(env){
 			var code = this.getCode();
-			return env ? evalWithEnv(env)(code) : eval(code);
+			return env ? evalWithEnv(env)(code) : eval("(" + code + ")");
 		}
 	};
 
