@@ -84,7 +84,7 @@ var tests = [
 	},
 	function(){
 		var f = evalWithEnv({a: 1, b: 2}, "a b"),
-			g = f("function(c){ return a + b + c; }");
+			g = f("(function(c){ return a + b + c; })");
 		submit("eval + default accessors #1", g(3) === 6);
 		submit("eval + default accessors get A", f.closure.getA() === 1);
 		submit("eval + default accessors get B", f.closure.getB() === 2);
@@ -97,7 +97,7 @@ var tests = [
 	},
 	function(){
 		var f = evalWithEnv({a: 1, b: 2}, "a b", evalWithEnv.prefixSlot),
-			g = f("function(c){ return a + b + c; }");
+			g = f("(function(c){ return a + b + c; })");
 		submit("eval + prefix accessors #1", g(3) === 6);
 		submit("eval + prefix accessors get A", f.closure.getA() === 1);
 		submit("eval + prefix accessors get B", f.closure.getB() === 2);
@@ -110,7 +110,7 @@ var tests = [
 	},
 	function(){
 		var f = evalWithEnv({a: 1, b: 2}, "a b", evalWithEnv.inlineSlot),
-			g = f("function(c){ return a + b + c; }");
+			g = f("(function(c){ return a + b + c; })");
 		submit("eval + inline accessors #1", g(3) === 6);
 		submit("eval + inline accessors get A", f.closure.a === 1);
 		submit("eval + inline accessors get B", f.closure.b === 2);
@@ -123,7 +123,7 @@ var tests = [
 	},
 	function(){
 		var f = evalWithEnv({a: 1, b: 2}, "a b", evalWithEnv.doubleSlot),
-			g = f("function(c){ return a + b + c; }");
+			g = f("(function(c){ return a + b + c; })");
 		submit("eval + double accessors #1", g(3) === 6);
 		submit("eval + double accessors get A", f.closure.a.get() === 1);
 		submit("eval + double accessors get B", f.closure.b.get() === 2);
@@ -136,7 +136,7 @@ var tests = [
 	},
 	function(){
 		var f = evalWithEnv({a: 1, b: 2}, "a b", evalWithEnv.functionSlot),
-			g = f("function(c){ return a + b + c; }");
+			g = f("(function(c){ return a + b + c; })");
 		submit("eval + function accessors #1", g(3) === 6);
 		submit("eval + function accessors get A", f.closure.a() === 1);
 		submit("eval + function accessors get B", f.closure.b() === 2);

@@ -21,12 +21,12 @@
 		// create our custom evaluator as a closure
 		if(!accessors){
 			return new Function(keys,
-				"return function(){ return eval('(' + arguments[0] + ')'); }").apply(null, vals);
+				"return function(){ return eval(arguments[0]); }").apply(null, vals);
 		}
 		// create a closure with accessors
 		binder = binder || evalWithEnv.prefixSlot;
 		return new Function(keys,
-			"var __f = function(){ return eval('(' + arguments[0] + ')'); };\n" +
+			"var __f = function(){ return eval(arguments[0]); };\n" +
 			"__f.closure = {\n" +
 			accessors.replace(/(\s*)(\b\w+\b)/g, function(_, spaces, name){
 				return (spaces ? ",\n" : "") + binder(name);
