@@ -31,7 +31,8 @@
 			(tmpl.getCode ? tmpl.getCode() : tmpl);
 		var result = [
 			"(function(){",
-			"    var __r = []; print = function(text){ __r.push(text); };",
+			"    var __r = [];",
+			"    function print(text){ __r.push(text); }"
 		];
 		var start = 0;
 		tmpl.replace(/<%(=?)([\s\S]+?)%>/g, function(match, prefix, text, offset){
