@@ -19,7 +19,13 @@
 		},
 		compile: function(env, accessors, binder){
 			var code = this.getCode();
-			return env ? evalWithEnv(env, accessors, binder)(code) : eval(code);
+			if(env){
+				if(typeof env != "function"){
+					env = evalWithEnv(env, accessors, binder);
+				}
+				return env(code);
+			}
+			return eval(code);
 		}
 	};
 
