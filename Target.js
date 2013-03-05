@@ -18,11 +18,11 @@
 		getCode: function(){
 			return this.lines.join("\n");
 		},
-		compile: function(env, accessors, binder){
+		compile: function(env){
 			var code = this.getCode();
 			if(env){
 				if(typeof env != "function"){
-					env = evalWithEnv(env, accessors, binder);
+					env = evalWithEnv(env);
 				}
 				code = env(code);
 			}else{
