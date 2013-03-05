@@ -8,7 +8,7 @@
 	}
 })(function(replace, Target){
 	"use strict";
-	return function constructor(tmpl, dict){
+	return function constructor(tmpl, dict, props){
 		tmpl = tmpl instanceof Array ? tmpl :
 			(tmpl.getCode ? tmpl.getCode(true) : tmpl.split("\n"));
 		var result = [];
@@ -35,6 +35,6 @@
 				result.push(line);
 			}
 		}
-		return new Target(result);
+		return new Target(result, props);
 	};
 });

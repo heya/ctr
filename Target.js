@@ -9,13 +9,14 @@
 })(function(evalWithEnv){
 	"use strict";
 
-	function Target(lines){
+	function Target(lines, props){
 		this.lines = lines;
+		this.props = props;
 	}
 
 	Target.prototype = {
-		getCode: function(asArray){
-			return asArray ? this.lines : this.lines.join("\n");
+		getCode: function(){
+			return this.lines.join("\n");
 		},
 		compile: function(env, accessors, binder){
 			var code = this.getCode();
@@ -23,9 +24,16 @@
 				if(typeof env != "function"){
 					env = evalWithEnv(env, accessors, binder);
 				}
-				return env(code);
+				code = env(code);
+			}else{
+				code = eval(code);
 			}
-			return eval(code);
+			if(code && this.props){
+				for(var key in this.props){
+					code[key] = this.props[key];
+				}
+			}
+			return code;
 		}
 	};
 
