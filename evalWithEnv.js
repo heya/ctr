@@ -28,9 +28,11 @@
 		return new Function(keys,
 			"var __f = function(){ return eval(arguments[0]); };\n" +
 			"__f.closure = {\n" +
-			accessors.replace(/(\s*)(\b\w+\b)/g, function(_, spaces, name){
-				return (spaces ? ",\n" : "") + binder(name);
-			}) +
+			(accessors === true ?
+				keys.map(binder).join(",\n") :
+				accessors.replace(/([,\s]*)(\b\w+\b)/g, function(_, spaces, name){
+					return (spaces ? ",\n" : "") + binder(name);
+				})) +
 			"\n};\n" +
 			"return __f;"
 		).apply(null, vals);

@@ -147,6 +147,32 @@ var tests = [
 		submit("eval + function accessors get A #2", f.closure.a() === 4);
 		submit("eval + function accessors get B #2", f.closure.b() === 5);
 	},
+	function(){
+		var f = evalWithEnv({a: 1, b: 2}, true),
+			g = f("(function(c){ return a + b + c; })");
+		submit("eval + default accessors #1", g(3) === 6);
+		submit("eval + default accessors get A", f.closure.getA() === 1);
+		submit("eval + default accessors get B", f.closure.getB() === 2);
+		submit("eval + default accessors set A", f.closure.setA(4) === 4);
+		submit("eval + default accessors #2", g(3) === 9);
+		submit("eval + default accessors set B", f.closure.setB(5) === 5);
+		submit("eval + default accessors #3", g(3) === 12);
+		submit("eval + default accessors get A #2", f.closure.getA() === 4);
+		submit("eval + default accessors get B #2", f.closure.getB() === 5);
+	},
+	function(){
+		var f = evalWithEnv({a: 1, b: 2}, "a, b"),
+			g = f("(function(c){ return a + b + c; })");
+		submit("eval + default accessors #1", g(3) === 6);
+		submit("eval + default accessors get A", f.closure.getA() === 1);
+		submit("eval + default accessors get B", f.closure.getB() === 2);
+		submit("eval + default accessors set A", f.closure.setA(4) === 4);
+		submit("eval + default accessors #2", g(3) === 9);
+		submit("eval + default accessors set B", f.closure.setB(5) === 5);
+		submit("eval + default accessors #3", g(3) === 12);
+		submit("eval + default accessors get A #2", f.closure.getA() === 4);
+		submit("eval + default accessors get B #2", f.closure.getB() === 5);
+	},
 	// Pool tests
 	function(){
 		var pool = new Pool;
