@@ -18,24 +18,19 @@
 			keys.push(key);
 			vals.push(env[key]);
 		}
-		// create our custom evaluator as a closure
-		if(!accessors){
-			return new Function(keys,
-				"return function(){ return eval(arguments[0]); }").apply(null, vals);
+		env = new Function(keys, "return function(){ return eval(arguments[0]); }").apply(null, vals);
+		if(accessors){
+			binder = binder || evalWithEnv.prefixSlot;
+			env.closure = env("({\n\t" +
+				(accessors === true ?
+					keys.map(binder).join(",\n\t") :
+					accessors.replace(/([,\s]*)(\b\w+\b)/g, function(_, spaces, name){
+						return (spaces ? ",\n\t" : "") + binder(name);
+					})
+				) +
+			"\n})");
 		}
-		// create a closure with accessors
-		binder = binder || evalWithEnv.prefixSlot;
-		return new Function(keys,
-			"var __f = function(){ return eval(arguments[0]); };\n" +
-			"__f.closure = {\n" +
-			(accessors === true ?
-				keys.map(binder).join(",\n") :
-				accessors.replace(/([,\s]*)(\b\w+\b)/g, function(_, spaces, name){
-					return (spaces ? ",\n" : "") + binder(name);
-				})) +
-			"\n};\n" +
-			"return __f;"
-		).apply(null, vals);
+		return env;
 	}
 
 	evalWithEnv.inlineSlot = function(name){
