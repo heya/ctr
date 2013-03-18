@@ -1,4 +1,4 @@
-# Constructor
+# Constructor [![Build Status](https://travis-ci.org/heya/ctr.png?branch=master)](https://travis-ci.org/heya/ctr)
 
 Constructor: a toolkit to construct JavaScript code.
 
