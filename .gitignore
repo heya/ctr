@@ -2,3 +2,5 @@ node_modules/*
 *.iml
 .idea
 *.sublime-*
+report/*
+coverage/*
