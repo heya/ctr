@@ -1,13 +1,14 @@
 (function(factory){
+	var deps = ["module", "heya-unit", "../count", "../replace",
+			"../main", "../jst", "../Pool", "../evalWithEnv"];
 	if(typeof define != "undefined"){ // AMD
-		define(["module", "heya-unit",
-			"../count", "../replace", "../main", "../jst",
-			"../Pool", "../evalWithEnv"], factory);
+		define(deps, factory);
 	}else if(typeof module != "undefined"){ // node.js
-		factory(module, require("heya-unit"),
-			require("../count"), require("../replace"),
-			require("../main"), require("../jst"),
-			require("../Pool"), require("../evalWithEnv"));
+		factory.apply(null,
+			deps.filter(function(_, i){ return i < factory.length; }).
+			map(function req(name){
+				return name === "require" && require || name === "module" && module || require(name);
+			}));
 	}
 })(function(module, unit, count, replace, ctr, jst, Pool, evalWithEnv){
 	"use strict";
