@@ -19,40 +19,48 @@
 			vals.push(env[key]);
 		}
 		env = new Function(keys, "return function(){ return eval(arguments[0]); }").apply(null, vals);
-		if(accessors){
-			binder = binder || evalWithEnv.prefixSlot;
-			env.closure = env("({\n\t" +
-				(accessors === true ?
-					keys.map(binder).join(",\n\t") :
-					accessors.replace(/([,\s]*)(\b\w+\b)/g, function(_, spaces, name){
-						return (spaces ? ",\n\t" : "") + binder(name);
-					})
-				) +
-			"\n})");
-		}
+		env.keys = keys;
+		accessors && evalWithEnv.addAccessors(env, accessors, binder);
 		return env;
 	}
 
-	evalWithEnv.inlineSlot = function(name){
+	function addAccessors(env, accessors, binder){
+		binder = binder || prefixSlot;
+		env.closure = env("({\n\t" +
+			(accessors === true ?
+				env.keys.map(binder).join(",\n\t") :
+				accessors.replace(/([,\s]*)(\b\w+\b)/g, function(_, spaces, name){
+					return (spaces ? ",\n\t" : "") + binder(name);
+				})
+			) +
+		"\n})");
+	}
+	evalWithEnv.addAccessors = addAccessors;
+
+	function inlineSlot(name){
 		return "get " + name + "(){ return " + name +
 			"; }, set " + name + "(value){ return " + name + " = value; }";
-	};
+	}
+	evalWithEnv.inlineSlot = inlineSlot;
 
-	evalWithEnv.functionSlot = function(name){
+	function functionSlot(name){
 		return name + ": function(value){ return arguments.length < 1 ? " +
 			name + " : " + name + " = value; }";
-	};
+	}
+	evalWithEnv.functionSlot = functionSlot;
 
-	evalWithEnv.doubleSlot = function(name){
+	function doubleSlot(name){
 		return name + ": {get: function(){ return " + name +
 			"; }, set: function(value){ return " + name + " = value; }}";
-	};
+	}
+	evalWithEnv.doubleSlot = doubleSlot;
 
-	evalWithEnv.prefixSlot = function(name){
+	function prefixSlot(name){
 		var capitalizedName = name.charAt(0).toUpperCase() + name.substring(1);
 		return "get" + capitalizedName + ": function(){ return " + name +
 			"; }, set" + capitalizedName + " : function(value){ return " + name + " = value; }";
-	};
+	}
+	evalWithEnv.prefixSlot = prefixSlot;
 
 	return evalWithEnv;
 });
