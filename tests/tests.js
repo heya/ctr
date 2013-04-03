@@ -53,154 +53,154 @@ function(module, unit, count, replace, ctr, jst, Pool, evalWithEnv){
 		// evalWithEnv() tests
 		function test_evalWithEnv_eval(t){
 			var x = 42;
-			eval(t.test('evalWithEnv({a: 1, b: 2})("a + b") === 3'));
-			eval(t.test('evalWithEnv({a: 1, b: 2})("typeof a + typeof x") === "numberundefined"'));
-			eval(t.test('evalWithEnv({a: 1, b: 2})("typeof b + typeof y") === "numberundefined"'));
+			eval(t.TEST('evalWithEnv({a: 1, b: 2})("a + b") === 3'));
+			eval(t.TEST('evalWithEnv({a: 1, b: 2})("typeof a + typeof x") === "numberundefined"'));
+			eval(t.TEST('evalWithEnv({a: 1, b: 2})("typeof b + typeof y") === "numberundefined"'));
 		},
 		function test_evalWithEnv_defaultAccessors(t){
 			var f = evalWithEnv({a: 1, b: 2}, "a b"),
 				g = f("(function(c){ return a + b + c; })");
-			eval(t.test('g(3) === 6'));
-			eval(t.test('f.closure.getA() === 1'));
-			eval(t.test('f.closure.getB() === 2'));
-			eval(t.test('f.closure.setA(4) === 4'));
-			eval(t.test('g(3) === 9'));
-			eval(t.test('f.closure.setB(5) === 5'));
-			eval(t.test('g(3) === 12'));
-			eval(t.test('f.closure.getA() === 4'));
-			eval(t.test('f.closure.getB() === 5'));
+			eval(t.TEST('g(3) === 6'));
+			eval(t.TEST('f.closure.getA() === 1'));
+			eval(t.TEST('f.closure.getB() === 2'));
+			eval(t.TEST('f.closure.setA(4) === 4'));
+			eval(t.TEST('g(3) === 9'));
+			eval(t.TEST('f.closure.setB(5) === 5'));
+			eval(t.TEST('g(3) === 12'));
+			eval(t.TEST('f.closure.getA() === 4'));
+			eval(t.TEST('f.closure.getB() === 5'));
 		},
 		function test_evalWithEnv_prefixAccessors(t){
 			var f = evalWithEnv({a: 1, b: 2}, "a b", evalWithEnv.prefixSlot),
 				g = f("(function(c){ return a + b + c; })");
-			eval(t.test('g(3) === 6'));
-			eval(t.test('f.closure.getA() === 1'));
-			eval(t.test('f.closure.getB() === 2'));
-			eval(t.test('f.closure.setA(4) === 4'));
-			eval(t.test('g(3) === 9'));
-			eval(t.test('f.closure.setB(5) === 5'));
-			eval(t.test('g(3) === 12'));
-			eval(t.test('f.closure.getA() === 4'));
-			eval(t.test('f.closure.getB() === 5'));
+			eval(t.TEST('g(3) === 6'));
+			eval(t.TEST('f.closure.getA() === 1'));
+			eval(t.TEST('f.closure.getB() === 2'));
+			eval(t.TEST('f.closure.setA(4) === 4'));
+			eval(t.TEST('g(3) === 9'));
+			eval(t.TEST('f.closure.setB(5) === 5'));
+			eval(t.TEST('g(3) === 12'));
+			eval(t.TEST('f.closure.getA() === 4'));
+			eval(t.TEST('f.closure.getB() === 5'));
 		},
 		function test_evalWithEnv_inlineAccessors(t){
 			var f = evalWithEnv({a: 1, b: 2}, "a b", evalWithEnv.inlineSlot),
 				g = f("(function(c){ return a + b + c; })");
-			eval(t.test('g(3) === 6'));
-			eval(t.test('f.closure.a === 1'));
-			eval(t.test('f.closure.b === 2'));
-			eval(t.test('(f.closure.a = 4) === 4'));
-			eval(t.test('g(3) === 9'));
-			eval(t.test('(f.closure.b = 5) === 5'));
-			eval(t.test('g(3) === 12'));
-			eval(t.test('f.closure.a === 4'));
-			eval(t.test('f.closure.b === 5'));
+			eval(t.TEST('g(3) === 6'));
+			eval(t.TEST('f.closure.a === 1'));
+			eval(t.TEST('f.closure.b === 2'));
+			eval(t.TEST('(f.closure.a = 4) === 4'));
+			eval(t.TEST('g(3) === 9'));
+			eval(t.TEST('(f.closure.b = 5) === 5'));
+			eval(t.TEST('g(3) === 12'));
+			eval(t.TEST('f.closure.a === 4'));
+			eval(t.TEST('f.closure.b === 5'));
 		},
 		function test_evalWithEnv_doubleAccessors(t){
 			var f = evalWithEnv({a: 1, b: 2}, "a b", evalWithEnv.doubleSlot),
 				g = f("(function(c){ return a + b + c; })");
-			eval(t.test('g(3) === 6'));
-			eval(t.test('f.closure.a.get() === 1'));
-			eval(t.test('f.closure.b.get() === 2'));
-			eval(t.test('f.closure.a.set(4) === 4'));
-			eval(t.test('g(3) === 9'));
-			eval(t.test('f.closure.b.set(5) === 5'));
-			eval(t.test('g(3) === 12'));
-			eval(t.test('f.closure.a.get() === 4'));
-			eval(t.test('f.closure.b.get() === 5'));
+			eval(t.TEST('g(3) === 6'));
+			eval(t.TEST('f.closure.a.get() === 1'));
+			eval(t.TEST('f.closure.b.get() === 2'));
+			eval(t.TEST('f.closure.a.set(4) === 4'));
+			eval(t.TEST('g(3) === 9'));
+			eval(t.TEST('f.closure.b.set(5) === 5'));
+			eval(t.TEST('g(3) === 12'));
+			eval(t.TEST('f.closure.a.get() === 4'));
+			eval(t.TEST('f.closure.b.get() === 5'));
 		},
 		function test_evalWithEnv_functionAccessors(t){
 			var f = evalWithEnv({a: 1, b: 2}, "a b", evalWithEnv.functionSlot),
 				g = f("(function(c){ return a + b + c; })");
-			eval(t.test('g(3) === 6'));
-			eval(t.test('f.closure.a() === 1'));
-			eval(t.test('f.closure.b() === 2'));
-			eval(t.test('f.closure.a(4) === 4'));
-			eval(t.test('g(3) === 9'));
-			eval(t.test('f.closure.b(5) === 5'));
-			eval(t.test('g(3) === 12'));
-			eval(t.test('f.closure.a() === 4'));
-			eval(t.test('f.closure.b() === 5'));
+			eval(t.TEST('g(3) === 6'));
+			eval(t.TEST('f.closure.a() === 1'));
+			eval(t.TEST('f.closure.b() === 2'));
+			eval(t.TEST('f.closure.a(4) === 4'));
+			eval(t.TEST('g(3) === 9'));
+			eval(t.TEST('f.closure.b(5) === 5'));
+			eval(t.TEST('g(3) === 12'));
+			eval(t.TEST('f.closure.a() === 4'));
+			eval(t.TEST('f.closure.b() === 5'));
 		},
 		function test_evalWithEnv_defaultFullAccessors(t){
 			var f = evalWithEnv({a: 1, b: 2}, true),
 				g = f("(function(c){ return a + b + c; })");
-			eval(t.test('g(3) === 6'));
-			eval(t.test('f.closure.getA() === 1'));
-			eval(t.test('f.closure.getB() === 2'));
-			eval(t.test('f.closure.setA(4) === 4'));
-			eval(t.test('g(3) === 9'));
-			eval(t.test('f.closure.setB(5) === 5'));
-			eval(t.test('g(3) === 12'));
-			eval(t.test('f.closure.getA() === 4'));
-			eval(t.test('f.closure.getB() === 5'));
+			eval(t.TEST('g(3) === 6'));
+			eval(t.TEST('f.closure.getA() === 1'));
+			eval(t.TEST('f.closure.getB() === 2'));
+			eval(t.TEST('f.closure.setA(4) === 4'));
+			eval(t.TEST('g(3) === 9'));
+			eval(t.TEST('f.closure.setB(5) === 5'));
+			eval(t.TEST('g(3) === 12'));
+			eval(t.TEST('f.closure.getA() === 4'));
+			eval(t.TEST('f.closure.getB() === 5'));
 		},
 		function test_evalWithEnv_defaultCommaAccessors(t){
 			var f = evalWithEnv({a: 1, b: 2}, "a, b"),
 				g = f("(function(c){ return a + b + c; })");
-			eval(t.test('g(3) === 6'));
-			eval(t.test('f.closure.getA() === 1'));
-			eval(t.test('f.closure.getB() === 2'));
-			eval(t.test('f.closure.setA(4) === 4'));
-			eval(t.test('g(3) === 9'));
-			eval(t.test('f.closure.setB(5) === 5'));
-			eval(t.test('g(3) === 12'));
-			eval(t.test('f.closure.getA() === 4'));
-			eval(t.test('f.closure.getB() === 5'));
+			eval(t.TEST('g(3) === 6'));
+			eval(t.TEST('f.closure.getA() === 1'));
+			eval(t.TEST('f.closure.getB() === 2'));
+			eval(t.TEST('f.closure.setA(4) === 4'));
+			eval(t.TEST('g(3) === 9'));
+			eval(t.TEST('f.closure.setB(5) === 5'));
+			eval(t.TEST('g(3) === 12'));
+			eval(t.TEST('f.closure.getA() === 4'));
+			eval(t.TEST('f.closure.getB() === 5'));
 		},
 		// Pool tests
 		function test_pool(t){
 			var pool = new Pool;
-			eval(t.test('!pool.getTop()'));
+			eval(t.TEST('!pool.getTop()'));
 			var env = pool.newEnv();
-			eval(t.test('countOwnProperties(env) == 0'));
+			eval(t.TEST('countOwnProperties(env) == 0'));
 			env.a = 42;
 			pool.commit(env);
 			env = pool.getTop();
-			eval(t.test('countOwnProperties(env) == 1'));
-			eval(t.test('env.a === 42'));
+			eval(t.TEST('countOwnProperties(env) == 1'));
+			eval(t.TEST('env.a === 42'));
 			env = pool.newEnv();
-			eval(t.test('countOwnProperties(env) == 0'));
-			eval(t.test('env.a === 42'));
+			eval(t.TEST('countOwnProperties(env) == 0'));
+			eval(t.TEST('env.a === 42'));
 			env.b = 13;
-			eval(t.test('countOwnProperties(env) == 1'));
-			eval(t.test('env.b === 13'));
+			eval(t.TEST('countOwnProperties(env) == 1'));
+			eval(t.TEST('env.b === 13'));
 			pool.merge(env);
 			env = pool.getTop();
-			eval(t.test('countOwnProperties(env) == 2'));
-			eval(t.test('env.a === 42'));
-			eval(t.test('env.b === 13'));
+			eval(t.TEST('countOwnProperties(env) == 2'));
+			eval(t.TEST('env.a === 42'));
+			eval(t.TEST('env.b === 13'));
 		},
 		// count() tests
 		function test_simple_counts(t){
 			"use strict";
 			var dict = count("$${a} ${a} ${b} ${a}");
-			eval(t.test('dict.a === 2'));
-			eval(t.test(' dict.b === 1'));
+			eval(t.TEST('dict.a === 2'));
+			eval(t.TEST(' dict.b === 1'));
 			if(Object.keys){
-				eval(t.test('Object.keys(dict).length == 2'));
+				eval(t.TEST('Object.keys(dict).length == 2'));
 			}
 		},
 		function test_complex_counts(t){
 			"use strict";
 			var dict = count("$${a}x${a}-${b}.$$${b}/${a}${a }", {b: 1, c: 2});
-			eval(t.test('dict.a === 2'));
-			eval(t.test('dict.b === 2'));
-			eval(t.test('dict.c === 2'));
+			eval(t.TEST('dict.a === 2'));
+			eval(t.TEST('dict.b === 2'));
+			eval(t.TEST('dict.c === 2'));
 			if(Object.keys){
-				eval(t.test('Object.keys(dict).length == 3'));
+				eval(t.TEST('Object.keys(dict).length == 3'));
 			}
 		},
 		// replace() tests
 		function test_simple_replace(t){
 			"use strict";
 			var text = replace("$${a} ${a} ${b} ${a}", {a: "xxx", b: 777});
-			eval(t.test('text === "${a} xxx 777 xxx"'));
+			eval(t.TEST('text === "${a} xxx 777 xxx"'));
 		},
 		function test_complex_replace(t){
 			"use strict";
 			var text = replace("$${a}x${a}-${b}\n.$$${b}/${a}${a }", {a: "yyy", b: 42, c: null});
-			eval(t.test('text === "${a}xyyy-42\\n.$${b}/yyy${a }"'));
+			eval(t.TEST('text === "${a}xyyy-42\\n.$${b}/yyy${a }"'));
 		},
 		// ctr() tests
 		function test_simple_ctr(t){
@@ -214,7 +214,7 @@ function(module, unit, count, replace, ctr, jst, Pool, evalWithEnv){
 						body: "return 'Hello, world!';"
 					}
 				).getCode();
-			eval(t.test('text ===' +
+			eval(t.TEST('text ===' +
 					'"(function(){\\n" +' +
 					'"    return \'Hello, world!\';\\n" +' +
 					'"})"'));
@@ -235,7 +235,7 @@ function(module, unit, count, replace, ctr, jst, Pool, evalWithEnv){
 							]
 					}
 				).getCode();
-			eval(t.test('text ===' +
+			eval(t.TEST('text ===' +
 					'"(function(a, b){\\n" +' +
 					'"    var c = a + b;\\n" +' +
 					'"    return c;\\n" +' +
@@ -248,39 +248,39 @@ function(module, unit, count, replace, ctr, jst, Pool, evalWithEnv){
 					]).compile({
 						name: "world"
 					})();
-			eval(t.test('text === "Hello, world!"'));
+			eval(t.TEST('text === "Hello, world!"'));
 		},
 		function test_jst_simple2(t){
 			var text = jst("Hello, Bob's <%= name %>!").compile({
 						name: "world"
 					})();
-			eval(t.test('text === "Hello, Bob\'s world!"'));
+			eval(t.TEST('text === "Hello, Bob\'s world!"'));
 		},
 		function test_jst_simple3(t){
 			var text = jst("Hello, <%= name %>!").compile({
 						name: "Bob's world"
 					})();
-			eval(t.test('text === "Hello, Bob\'s world!"'));
+			eval(t.TEST('text === "Hello, Bob\'s world!"'));
 		},
 		function test_jst_sorry0(t){
 			var text = jst(sorryTmpl1).compile({count: 0})();
-			eval(t.test('text === "I am not sorry."'));
+			eval(t.TEST('text === "I am not sorry."'));
 		},
 		function test_jst_sorry1(t){
 			var text = jst(sorryTmpl1).compile({count: 1})();
-			eval(t.test('text === "I am sorry."'));
+			eval(t.TEST('text === "I am sorry."'));
 		},
 		function test_jst_sorry2(t){
 			var text = jst(sorryTmpl1).compile({count: 2})();
-			eval(t.test('text === "I am very sorry."'));
+			eval(t.TEST('text === "I am very sorry."'));
 		},
 		function test_jst_sorry3(t){
 			var text = jst(sorryTmpl1).compile({count: 3})();
-			eval(t.test('text === "I am very very sorry."'));
+			eval(t.TEST('text === "I am very very sorry."'));
 		},
 		function test_jst_sorry3_inline(t){
 			var text = jst(sorryTmpl2).compile({count: 3})();
-			eval(t.test('text === "I am very very sorry."'));
+			eval(t.TEST('text === "I am very very sorry."'));
 		}
 	]);
 
