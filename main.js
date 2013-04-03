@@ -1,12 +1,5 @@
-(function(factory){
-	if(typeof define != "undefined"){ // AMD
-		define(["./replace", "./Target"], factory);
-	}else if(typeof module != "undefined"){ // node.js
-		module.exports = factory(require("./replace"), require("./Target"));
-	}else{
-		ctr = factory(ctrReplace, ctrTarget);
-	}
-})(function(replace, Target){
+/* UMD.define */ (typeof define=="function"&&define||function(d,f,m){m={module:module,require:require};module.exports=f.apply(null,d.map(function(n){return m[n]||require(n)}))})
+(["./replace", "./Target"], function(replace, Target){
 	"use strict";
 	return function constructor(tmpl, dict, props){
 		tmpl = tmpl instanceof Array ? tmpl :

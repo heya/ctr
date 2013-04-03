@@ -1,16 +1,7 @@
-(function(factory){
-	var deps = ["module", "heya-unit", "../count", "../replace",
-			"../main", "../jst", "../Pool", "../evalWithEnv"];
-	if(typeof define != "undefined"){ // AMD
-		define(deps, factory);
-	}else if(typeof module != "undefined"){ // node.js
-		factory.apply(null,
-			deps.filter(function(_, i){ return i < factory.length; }).
-			map(function req(name){
-				return name === "require" && require || name === "module" && module || require(name);
-			}));
-	}
-})(function(module, unit, count, replace, ctr, jst, Pool, evalWithEnv){
+/* UMD.define */ (typeof define=="function"&&define||function(d,f,m){m={module:module,require:require};module.exports=f.apply(null,d.map(function(n){return m[n]||require(n)}))})
+(["module", "heya-unit", "../count", "../replace", "../main",
+	"../jst", "../Pool", "../evalWithEnv"],
+function(module, unit, count, replace, ctr, jst, Pool, evalWithEnv){
 	"use strict";
 
 	var countOwnProperties;

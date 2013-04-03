@@ -1,12 +1,5 @@
-(function(factory){
-	if(typeof define != "undefined"){ // AMD
-		define(["./evalWithEnv"], factory);
-	}else if(typeof module != "undefined"){ // node.js
-		module.exports = factory(require("./evalWithEnv"));
-	}else{
-		ctrTarget = factory(ctrEvalWithEnv);
-	}
-})(function(evalWithEnv){
+/* UMD.define */ (typeof define=="function"&&define||function(d,f,m){m={module:module,require:require};module.exports=f.apply(null,d.map(function(n){return m[n]||require(n)}))})
+(["./evalWithEnv"], function(evalWithEnv){
 	"use strict";
 
 	function Target(lines, props){

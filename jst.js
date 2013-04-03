@@ -1,12 +1,5 @@
-(function(factory){
-	if(typeof define != "undefined"){ // AMD
-		define(["./Target"], factory);
-	}else if(typeof module != "undefined"){ // node.js
-		module.exports = factory(require("./Target"));
-	}else{
-		ctrJst = factory(ctrTarget);
-	}
-})(function(Target){
+/* UMD.define */ (typeof define=="function"&&define||function(d,f,m){m={module:module,require:require};module.exports=f.apply(null,d.map(function(n){return m[n]||require(n)}))})
+(["./Target"], function(Target){
 	"use strict";
 
 	var escapeTable = {
