@@ -1,7 +1,7 @@
 /* UMD.define */ (typeof define=="function"&&define||function(d,f,m){m={module:module,require:require};module.exports=f.apply(null,d.map(function(n){return m[n]||require(n)}))})
 (["module", "heya-unit", "../count", "../replace", "../main",
-	"../jst", "../Pool", "../evalWithEnv"],
-function(module, unit, count, replace, ctr, jst, Pool, evalWithEnv){
+	"../jst", "../Pool", "../evalWithEnv", "../lambda"],
+function(module, unit, count, replace, ctr, jst, Pool, evalWithEnv, lambda){
 	"use strict";
 
 	var countOwnProperties;
@@ -281,6 +281,22 @@ function(module, unit, count, replace, ctr, jst, Pool, evalWithEnv){
 		function test_jst_sorry3_inline(t){
 			var text = jst(sorryTmpl2).compile({count: 3})();
 			eval(t.TEST('text === "I am very very sorry."'));
+		},
+		// lambda tests
+		function test_lambda(t){
+			eval(t.TEST("lambda('1 + _ + 2')(3) === 6"));
+			eval(t.TEST("lambda('+1')(3) === 4"));
+			eval(t.TEST("lambda('6/')(3) === 2"));
+			eval(t.TEST("lambda('/')(6, 3) === 2"));
+			eval(t.TEST("lambda('a, b -> a / b + 1')(6, 3) === 3"));
+			eval(t.TEST("lambda('a / b + a')(6, 3) === 8"));
+			eval(t.TEST("lambda('/2/')(6, 3) === 1"));
+
+			var f1 = lambda.build("a, b -> a + b + c").compile({c: 42});
+			eval(t.TEST("f1(1, 2) === 45"));
+
+			var f2 = lambda.build("a + _ + b").compile({a: 13, b: 22});
+			eval(t.TEST("f2(3) === 38"));
 		}
 	]);
 
