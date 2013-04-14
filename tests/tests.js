@@ -291,6 +291,8 @@ function(module, unit, count, replace, ctr, jst, Pool, evalWithEnv, lambda){
 			eval(t.TEST("lambda('a, b -> a / b + 1')(6, 3) === 3"));
 			eval(t.TEST("lambda('a / b + a')(6, 3) === 8"));
 			eval(t.TEST("lambda('/2/')(6, 3) === 1"));
+			eval(t.TEST("lambda('a -> b -> a / b + 1')(6)(3) === 3"));
+			eval(t.TEST("lambda('-> 5')() === 5"));
 
 			var f1 = lambda.build("a, b -> a + b + c").compile({c: 42});
 			eval(t.TEST("f1(1, 2) === 45"));

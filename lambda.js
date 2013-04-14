@@ -33,9 +33,14 @@
 		//		arguments, and a body , which is used to calculate the
 		//		returning value.
 		var args = [], sects = s.split(/\s*->\s*/m);
-		if(sects.length == 2){
-			s = sects[1];
-			args = sects[0].split(/\s*,\s*|\s+/m);
+		if(sects.length > 1){
+			while(sects.length){
+				s = sects.pop();
+				args = sects.pop().split(/\s*,\s*|\s+/m);
+				if(sects.length){
+					sects.push("(function(" + args.join(", ") + "){ return (" + s + "); })");
+				}
+			}
 		}else if(s.match(/\b_\b/)){
 			args = ["_"];
 		}else{
