@@ -14,7 +14,9 @@
     "test": "node tests/tests.js"
   },
   "amd": {},
-  "volo": {},
+  "volo": {
+    "type": "directory"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/heya/ctr.git"
