@@ -13,7 +13,6 @@
   "scripts": {
     "test": "node tests/tests.js"
   },
-  "amd": {},
   "volo": {
     "type": "directory"
   },
