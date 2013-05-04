@@ -14,5 +14,5 @@ npm install heya-ctr
 For your browser-based projects I suggest to use [volo.js](http://volojs.org):
 
 ```
-volo install heya/ctr heya-ctr
+volo add -amdoff heya/ctr heya-ctr
 ```
