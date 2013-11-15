@@ -7,12 +7,12 @@
 			require.config({
 				baseUrl: ".",
 				packages: [
+					{name: "heya-unify",
+					location: "../node_modules/heya-unify"},
 					{name: "heya-unit",
 					location: "../node_modules/heya-unit"},
 					{name: "heya-ice",
-					location: "../node_modules/heya-unit/node_modules/heya-ice"},
-					{name: "heya-unify",
-					location: "../node_modules/heya-unit/node_modules/heya-unify"}
+					location: "../node_modules/heya-unit/node_modules/heya-ice"}
 				],
 				paths: {
 					"domReady": "https://raw.github.com/requirejs/domReady/latest/domReady"
