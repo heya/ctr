@@ -18,6 +18,21 @@ function(module, unit, unify, qsort){
 				qs(b);
 				eval(t.TEST("unify(a, b)"));
 			}
+		},
+		function test_external(t){
+			var qs = qsort(function(a, b){ return a < b; }).compile();
+
+			var arrays = 100, size = 100;
+			for(var i = 0; i < arrays; ++i){
+				var a = new Array(size);
+				for(var j = 0; j < size; ++j){
+					a[j] = Math.random();
+				}
+				var b = a.slice(0);
+				a.sort();
+				qs(b);
+				eval(t.TEST("unify(a, b)"));
+			}
 		}
 	]);
 

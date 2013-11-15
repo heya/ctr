@@ -60,6 +60,24 @@ function(module, unit, bsearch){
 					eval(t.TEST("(index === a.length || value <= a[index]) && (index === 0 || a[index - 1] < value)"));
 				}
 			}
+		},
+		function test_external(t){
+			var bs = bsearch(function(a, b){ return a < b; }).compile();
+
+			var arrays = 10, size = 100, tests = 10;
+			for(var i = 0; i < arrays; ++i){
+				var a = new Array(size);
+				for(var j = 0; j < size; ++j){
+					a[j] = Math.random();
+				}
+				a.sort();
+				for(j = 0; j < tests; ++j){
+					var value = Math.random(),
+						index = bs(a, value);
+					eval(t.TEST("index >= 0 && index <= a.length"));
+					eval(t.TEST("(index === a.length || value <= a[index]) && (index === 0 || a[index - 1] < value)"));
+				}
+			}
 		}
 	]);
 
