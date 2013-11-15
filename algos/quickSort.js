@@ -1,5 +1,5 @@
 /* UMD.define */ (typeof define=="function"&&define||function(d,f,m){m={module:module,require:require};module.exports=f.apply(null,d.map(function(n){return m[n]||require(n)}))})
-([], function(){
+(["../main"], function(ctr){
 	"use strict";
 
 	var fTmpl = [
@@ -9,15 +9,15 @@
 			"   for(;;){",
 			"       var __l = __L, __r = __R, __pivot = __a[Math.floor(Math.random() * (__r - __l + 1)) + __l];",
 			"       while(__l <= __r){",
-			"           b = _pivot;",
+			"           b = __pivot;",
 			"           for(;; ++__l){",
 			"               a = __a[__l];",
-			"               #{lessCond}",
+			"               #{pred}",
 			"           }",
-			"           a = _pivot;",
+			"           a = __pivot;",
 			"           for(;; --__r){",
 			"               b = __a[__r];",
-			"               #{lessCond}",
+			"               #{pred}",
 			"           }",
 			"           if(__l <= __r){",
 			"               __t = __a[__l];",
@@ -27,7 +27,7 @@
 			"       }",
 			"       if(__L < __r){",
 			"           if(__l < __R){",
-			"               __backlog.push(__l, __R);"
+			"               __backlog.push(__l, __R);",
 			"           }",
 			"           __R = __r;",
 			"           continue;",
@@ -46,34 +46,34 @@
 			"})",
 			"//@ sourceURL=#{name}"
 		],
-		dTmpl = "if(!${pred}) break;";
+		dTmpl = "if(!(${lessCond})) break;";
 
 	var uniqNumber = 0;
 
 	return function(less, name){
-		var ext, props = null, lessCond, last;
+		var ext, props, pred, last;
 		switch(typeof less){
 			case "function":
-				ext = "var __e = __self.__e;";
+				ext   = "var __e = __self.__e;";
 				props = {__e: less};
-				lessCond = ctr(dTmpl, {pred: "__e(a, b)"}).lines;
+				pred  = ctr(dTmpl, {lessCond: "__e(a, b)"}).lines;
 				break;
 			case "string":
-				lessCond = ctr(dTmpl, {pred: less}).lines;
+				pred  = ctr(dTmpl, {lessCond: less}).lines;
 				break;
 			default: // Array
-				last = less.length - 1;
-				lessCond = less.slice(0, last).concat(
-					ctr(dTmpl, {pred: less[last]}).lines
+				last  = less.length - 1;
+				pred  = less.slice(0, last).concat(
+					ctr(dTmpl, {lessCond: less[last]}).lines
 				);
 				break;
 		}
 		return ctr(
 			fTmpl,
 			{
-				extInit:  ext,
-				lessCond: lessCond,
-				name:     name || ("/algos/quickSort/" + (uniqNumber++))
+				extInit: ext,
+				pred:    pred,
+				name:    name || ("/algos/quickSort/" + (uniqNumber++))
 			},
 			props
 		);

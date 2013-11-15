@@ -8,6 +8,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "heya-unify": ">=0.1",
     "heya-unit": ">=0.1"
   },
   "scripts": {
