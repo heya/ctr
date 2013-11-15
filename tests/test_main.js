@@ -302,5 +302,5 @@ function(module, unit, count, replace, ctr, jst, Pool, evalWithEnv, lambda){
 		}
 	]);
 
-	unit.run();
+	return {};
 });
