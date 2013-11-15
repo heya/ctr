@@ -2,7 +2,7 @@
 (["../main"], function(ctr){
 	"use strict";
 
-	var fTmpl = [
+	var aTmpl = [
 			"(function __self(__a, b){",
 			"   #{extInit}",
 			"   var __l = 0, __r = __a.length;",
@@ -11,44 +11,58 @@
 			"           a = __a[__m];",
 			"       #{decision}",
 			"   }",
-			"   return __l;",
+			"   #{result}",
 			"})",
 			"//@ sourceURL=#{name}"
 		],
-		dTmpl = [
-			"if(${lessCond}){",
+		dTmpl1 = "if(${lessCond}){",
+		dTmpl2 = [
 			"    __l = __m + 1;",
 			"}else{",
 			"    __r = __m;",
 			"}"
+		],
+		fTmpl1 = [
+			"if(__l == __a.length) return -1;",
+			"a = b, b = __a[__l];"
+		],
+		fTmpl2 = [
+			"    return -1;",
+			"}",
+			"return __l;"
 		];
 
 	var uniqNumber = 0;
 
-	return function(less, name){
-		var ext, props = null, decision, last;
+	return function(less, opt){
+		var ext, props = null, decision, last, result;
 		switch(typeof less){
 			case "function":
 				ext = "var __e = __self.__e;";
 				props = {__e: less};
-				decision = ctr(dTmpl, {lessCond: "__e(a, b)"}).lines;
+				decision = ctr(dTmpl1, {lessCond: "__e(a, b)"}).lines;
 				break;
 			case "string":
-				decision = ctr(dTmpl, {lessCond: less}).lines;
+				decision = ctr(dTmpl1, {lessCond: less}).lines;
 				break;
 			default: // Array
 				last = less.length - 1;
 				decision = less.slice(0, last).concat(
-					ctr(dTmpl, {lessCond: less[last]}).lines
+					ctr(dTmpl1, {lessCond: less[last]}).lines
 				);
 				break;
 		}
+		if(opt && opt.fail){
+			result = fTmpl1.concat(decision, fTmpl2);
+		}
 		return ctr(
-			fTmpl,
+			aTmpl,
 			{
 				extInit:  ext,
-				decision: decision,
-				name:     name || ("/algos/binarySearch/" + (uniqNumber++))
+				decision: decision.concat(dTmpl2),
+				result:   result || "return __l;",
+				name:     (typeof opt == "string" && opt) || (opt && opt.name) ||
+							("/algos/binarySearch/" + (uniqNumber++))
 			},
 			props
 		);
