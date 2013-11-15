@@ -1,6 +1,6 @@
 {
   "name": "heya-ctr",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "Constructor: a toolkit to construct JavaScript code.",
   "main": "main.js",
   "directories": {
@@ -11,7 +11,7 @@
     "heya-unit": ">=0.1"
   },
   "scripts": {
-    "test": "node tests/tests.js"
+    "test": "node tests/test_main.js"
   },
   "amd": {},
   "volo": {
