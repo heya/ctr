@@ -3,9 +3,12 @@
 	"use strict";
 
 	var fTmpl = [
-			"(function __self(__a){",
+			"(function __self(__a, __L, __R){",
 			"   #{extInit}",
-			"   var __L = 0, __R = __a.length - 1, __backlog = [], __t, a, b;",
+			"   __R = Math.min(isNaN(__R) ? __a.length : Math.max(0, __R), __a.length);",
+			"   __L = Math.min(isNaN(__L) ? 0 : Math.max(0, __L), __R);",
+			"   --__R;",
+			"   var __backlog = [], __t, a, b;",
 			"   for(;;){",
 			"       var __l = __L, __r = __R, __pivot = __a[Math.floor(Math.random() * (__r - __l + 1)) + __l];",
 			"       while(__l <= __r){",
