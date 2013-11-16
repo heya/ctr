@@ -3,9 +3,11 @@
 	"use strict";
 
 	var aTmpl = [
-			"(function __self(__a, b){",
+			"(function __self(__a, b, __l, ${right}){",
 			"   #{extInit}",
-			"   var __l = 0, __r = __a.length;",
+			"   ${right} = Math.min(isNaN(${right}) ? __a.length : Math.max(0, ${right}), __a.length);",
+			"   __l = Math.min(isNaN(__l) ? 0 : Math.max(0, __l), ${right});",
+			"   #{downcast}",
 			"   while(__l < __r){",
 			"       var __m = ((__r - __l) >> 1) + __l,",
 			"           a = __a[__m];",
@@ -23,7 +25,7 @@
 			"}"
 		],
 		fTmpl1 = [
-			"if(__l == __a.length) return -1;",
+			"if(__l >= __R) return -1;",
 			"a = b, b = __a[__l];"
 		],
 		fTmpl2 = [
@@ -59,6 +61,8 @@
 			aTmpl,
 			{
 				extInit:  ext,
+				right:    result ? "__R" : "__r",
+				downcast: result ? "var __r = __R;" : undefined,
 				decision: decision.concat(dTmpl2),
 				result:   result || "return __l;",
 				name:     (typeof opt == "string" && opt) || (opt && opt.name) ||
