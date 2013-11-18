@@ -25,11 +25,11 @@
 			"}"
 		],
 		fTmpl1 = [
-			"if(__l >= __R) return -1;",
+			"if(__l >= __R) return -(__l + 1);",
 			"a = b, b = __a[__l];"
 		],
 		fTmpl2 = [
-			"    return -1;",
+			"    return -(__l + 1);",
 			"}",
 			"return __l;"
 		];

@@ -93,7 +93,12 @@ function(module, unit, bsearch){
 					var value = Math.random(),
 						index = bs(a, value);
 					eval(t.TEST("index < a.length"));
-					eval(t.TEST("index < 0 || a[index] === value"));
+					if(index < 0){
+						index = -index - 1;
+						eval(t.TEST("(index === a.length || value < a[index]) && (index === 0 || a[index - 1] < value)"));
+					}else{
+						eval(t.TEST("a[index] === value"));
+					}
 				}
 			}
 		},
@@ -111,7 +116,12 @@ function(module, unit, bsearch){
 					var value = Math.random(),
 						index = bs(a, value);
 					eval(t.TEST("index < a.length"));
-					eval(t.TEST("index < 0 || a[index] === value"));
+					if(index < 0){
+						index = -index - 1;
+						eval(t.TEST("(index === a.length || value < a[index]) && (index === 0 || a[index - 1] < value)"));
+					}else{
+						eval(t.TEST("a[index] === value"));
+					}
 				}
 			}
 		}
