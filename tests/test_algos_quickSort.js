@@ -3,6 +3,8 @@
 function(module, unit, unify, qsort){
 	"use strict";
 
+	function cmpNum(a, b){ return a - b; }
+
 	unit.add(module, [
 		function test_random(t){
 			var qs = qsort("a < b").compile();
@@ -14,7 +16,7 @@ function(module, unit, unify, qsort){
 					a[j] = Math.random();
 				}
 				var b = a.slice(0);
-				a.sort();
+				a.sort(cmpNum);
 				qs(b);
 				eval(t.TEST("unify(a, b)"));
 			}
@@ -29,7 +31,7 @@ function(module, unit, unify, qsort){
 					a[j] = Math.random();
 				}
 				var b = a.slice(0);
-				a.sort();
+				a.sort(cmpNum);
 				qs(b);
 				eval(t.TEST("unify(a, b)"));
 			}

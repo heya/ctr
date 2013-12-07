@@ -3,6 +3,8 @@
 function(module, unit, bsearch){
 	"use strict";
 
+	function cmpNum(a, b){ return a - b; }
+
 	unit.add(module, [
 		function test_simple(t){
 			var bs = bsearch("a < b").compile();
@@ -52,7 +54,7 @@ function(module, unit, bsearch){
 				for(var j = 0; j < size; ++j){
 					a[j] = Math.random();
 				}
-				a.sort();
+				a.sort(cmpNum);
 				for(j = 0; j < tests; ++j){
 					var value = Math.random(),
 						index = bs(a, value);
@@ -70,7 +72,7 @@ function(module, unit, bsearch){
 				for(var j = 0; j < size; ++j){
 					a[j] = Math.random();
 				}
-				a.sort();
+				a.sort(cmpNum);
 				for(j = 0; j < tests; ++j){
 					var value = Math.random(),
 						index = bs(a, value);
@@ -88,7 +90,7 @@ function(module, unit, bsearch){
 				for(var j = 0; j < size; ++j){
 					a[j] = Math.random();
 				}
-				a.sort();
+				a.sort(cmpNum);
 				for(j = 0; j < tests; ++j){
 					var value = Math.random(),
 						index = bs(a, value);
@@ -111,7 +113,7 @@ function(module, unit, bsearch){
 				for(var j = 0; j < size; ++j){
 					a[j] = Math.random();
 				}
-				a.sort();
+				a.sort(cmpNum);
 				for(j = 0; j < tests; ++j){
 					var value = Math.random(),
 						index = bs(a, value);
