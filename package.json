@@ -1,6 +1,6 @@
 {
   "name": "heya-ctr",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Constructor: a toolkit to construct JavaScript code.",
   "main": "main.js",
   "directories": {
