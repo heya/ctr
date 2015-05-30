@@ -3,14 +3,15 @@
 	"use strict";
 
 	var fTmpl = [
-			"(function __self(__a){",
+			"(function __self(#{arg}){",
 			"    #{extInit}",
+			"    #{init}",
 			"    if(__a.length > 1){",
 			"        for(var __n = __a.length - 1; __n; --__n){",
 			"            var a = __a[__n], b;",
 			"            __a[__n] = __a[0];",
 			"            __a[0] = a;",
-			"            for(var __i = 0, __c = 1; __c < __n; __i = __c, __c = 2 * __i + 1){",
+			"            for(var __i = 0, __c = 1; __c < __n; __i = __c, __c = (__i << 1) + 1){",
 			"                b = __a[__c];",
 			"                if(__c + 1 < __n){",
 			"                    a = __a[__c + 1];",
@@ -28,7 +29,7 @@
 			"            }",
 			"        }",
 			"    }",
-			"    return __a;",
+			"    return #{ret};",
 			"})",
 			"//@ sourceURL=#{name}"
 		];
@@ -56,9 +57,18 @@
 				}
 				break;
 		}
+		var arg = "__a", init = [], ret = arg;
+		if(opt && opt.member){
+			arg  = "";
+			init = "var __a = this." + opt.member + ";";
+			ret  = "this";
+		}
 		return ctr(
 			fTmpl,
 			{
+				arg:      arg,
+				init:     init,
+				ret:      ret,
 				extInit:  ext,
 				predCond: pred,
 				lessCond: cond,

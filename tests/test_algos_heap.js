@@ -123,6 +123,49 @@ function(module, unit, makeHeap, popHeap, pushHeap, sortHeap){
 			var a = sample.map(identity).sort(cmpNum);
 
 			eval(t.ASSERT("t.unify(a, heap)"));
+		},
+		function test_maxHeap_object(t){
+			function MaxHeap(a){
+				if(a){
+					this.init(a);
+				}else{
+					this.array = [];
+				}
+			}
+
+			var make = makeHeap(null, {member: "array"}).compile();
+			var push = pushHeap(null, {member: "array"}).compile();
+			var pop  = popHeap (null, {member: "array"}).compile();
+			var sort = sortHeap(null, {member: "array"}).compile();
+
+			MaxHeap.prototype = {
+				init: function(a){
+					this.array = a.map(identity);
+					return this._make();
+				},
+				empty: function(){ return !this.array.length; },
+				push:  push,
+				pop:   pop,
+				sort:  sort,
+				_make: make
+			};
+
+			var sorted = sample.map(identity).sort(cmpNum);
+
+			var heap = new MaxHeap(sample);
+
+			var a = [];
+			while(!heap.empty()){
+				a.push(heap.pop());
+			}
+			a.reverse();
+			eval(t.TEST("t.unify(sorted, a)"));
+
+			sample.forEach(function(value){
+				heap.push(value);
+			});
+			heap.sort();
+			eval(t.TEST("t.unify(sorted, heap.array)"));
 		}
 	]);
 

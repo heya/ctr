@@ -3,8 +3,9 @@
 	"use strict";
 
 	var fTmpl = [
-			"(function __self(__a, b){",
+			"(function __self(#{arg}b){",
 			"    #{extInit}",
+			"    #{init}",
 			"    var __i = __a.length;",
 			"    __a.push(b);",
 			"    while(__i){",
@@ -15,7 +16,7 @@
 			"        __a[__p] = b;",
 			"        __i = __p;",
 			"    }",
-			"    return __a;",
+			"    return #{ret};",
 			"})",
 			"//@ sourceURL=#{name}"
 		];
@@ -43,9 +44,18 @@
 				}
 				break;
 		}
+		var arg = "__a, ", init = [], ret = "__a";
+		if(opt && opt.member){
+			arg  = "";
+			init = "var __a = this." + opt.member + ";";
+			ret  = "this";
+		}
 		return ctr(
 			fTmpl,
 			{
+				arg:      arg,
+				init:     init,
+				ret:      ret,
 				extInit:  ext,
 				predCond: pred,
 				lessCond: cond,
