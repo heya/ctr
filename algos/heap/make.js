@@ -6,11 +6,8 @@
 			"(function __self(__a){",
 			"    #{extInit}",
 			"    if(__a.length > 1){",
-			"        for(var __n = __a.length - 1; __n; --__n){",
-			"            var a = __a[__n], b;",
-			"            __a[__n] = __a[0];",
-			"            __a[0] = a;",
-			"            for(var __i = 0, __c = 1; __c < __n; __i = __c, __c = 2 * __i + 1){",
+			"        for(var __n = __a.length, __j = __n >> 1 - 1, a, b; __j >= 0; --__j){",
+			"            for(var __i = __j, __c = 2 * __i + 1; __c < __n; __c = 2 * __i + 1){",
 			"                b = __a[__c];",
 			"                if(__c + 1 < __n){",
 			"                    a = __a[__c + 1];",
@@ -25,6 +22,7 @@
 			"                if(!(#{lessCond})) break;",
 			"                __a[__c] = a;",
 			"                __a[__i] = b;",
+			"                __i = __c;",
 			"            }",
 			"        }",
 			"    }",
@@ -62,7 +60,7 @@
 				extInit:  ext,
 				predCond: pred,
 				lessCond: cond,
-				name:     name || ("/algos/maxHeap/sort" + (uniqNumber++))
+				name:     name || ("/algos/heap/make" + (uniqNumber++))
 			},
 			props
 		);
@@ -71,13 +69,10 @@
 	/*
 	// The model function:
 
-	function sort(__a, __less){
+	function make(__a, __less){
 		if(__a.length > 1){
-			for(var __n = __a.length - 1; __n; --__n){
-				var a = __a[__n], b;
-				__a[__n] = __a[0];
-				__a[0] = a;
-				for(var __i = 0, __c = 1; __c < __n; __i = __c, __c = 2 * __i + 1){
+			for(var __n = __a.length, __j = __n >> 1 - 1, a, b; __j >= 0; --__j){
+				for(var __i = __j, __c = 2 * __i + 1; __c < __n; __i = __c, __c = 2 * __i + 1){
 					b = __a[__c];
 					if(__c + 1 < __n){
 						a = __a[__c + 1];

@@ -61,7 +61,7 @@
 				extInit:  ext,
 				predCond: pred,
 				lessCond: cond,
-				name:     name || ("/algos/maxHeap/pop" + (uniqNumber++))
+				name:     name || ("/algos/heap/pop" + (uniqNumber++))
 			},
 			props
 		);

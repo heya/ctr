@@ -1,7 +1,7 @@
 /* UMD.define */ (typeof define=="function"&&define||function(d,f,m){m={module:module,require:require};module.exports=f.apply(null,d.map(function(n){return m[n]||require(n)}))})
-(["module", "heya-unit", "../algos/maxHeap/make", "../algos/maxHeap/pop",
-	"../algos/maxHeap/push", "../algos/maxHeap/sort"],
-function(module, unit, makeMaxHeap, popMaxHeap, pushMaxHeap, sortMaxHeap){
+(["module", "heya-unit", "../algos/heap/make", "../algos/heap/pop",
+	"../algos/heap/push", "../algos/heap/sort"],
+function(module, unit, makeHeap, popHeap, pushHeap, sortHeap){
 	"use strict";
 
 	function cmpNum(a, b){ return a - b; }
@@ -21,7 +21,7 @@ function(module, unit, makeMaxHeap, popMaxHeap, pushMaxHeap, sortMaxHeap){
 
 	unit.add(module, [
 		function test_maxHeap_make(t){
-			var make = makeMaxHeap().compile();
+			var make = makeHeap().compile();
 			var heap = make(sample.map(identity));
 			walk(heap, function(heap, index){
 				var l = 2 * index + 1, r = l + 1;
@@ -30,7 +30,7 @@ function(module, unit, makeMaxHeap, popMaxHeap, pushMaxHeap, sortMaxHeap){
 			});
 		},
 		function test_maxHeap_make_external(t){
-			var make = makeMaxHeap(less).compile();
+			var make = makeHeap(less).compile();
 			var heap = make(sample.map(identity));
 			walk(heap, function(heap, index){
 				var l = 2 * index + 1, r = l + 1;
@@ -39,8 +39,8 @@ function(module, unit, makeMaxHeap, popMaxHeap, pushMaxHeap, sortMaxHeap){
 			});
 		},
 		function test_maxHeap_pop(t){
-			var make = makeMaxHeap().compile();
-			var pop  = popMaxHeap().compile();
+			var make = makeHeap().compile();
+			var pop  = popHeap().compile();
 			var heap = make(sample.map(identity));
 
 			var a = sample.map(identity).sort(cmpNum).reverse();
@@ -53,8 +53,8 @@ function(module, unit, makeMaxHeap, popMaxHeap, pushMaxHeap, sortMaxHeap){
 			eval(t.ASSERT("t.unify(a, b)"));
 		},
 		function test_maxHeap_pop_external(t){
-			var make = makeMaxHeap(less).compile();
-			var pop  = popMaxHeap(less).compile();
+			var make = makeHeap(less).compile();
+			var pop  = popHeap(less).compile();
 			var heap = make(sample.map(identity));
 
 			var a = sample.map(identity).sort(cmpNum).reverse();
@@ -67,8 +67,8 @@ function(module, unit, makeMaxHeap, popMaxHeap, pushMaxHeap, sortMaxHeap){
 			eval(t.ASSERT("t.unify(a, b)"));
 		},
 		function test_maxHeap_push(t){
-			var push = pushMaxHeap().compile();
-			var pop  = popMaxHeap().compile();
+			var push = pushHeap().compile();
+			var pop  = popHeap().compile();
 
 			var heap = [];
 			sample.forEach(function(value){
@@ -85,8 +85,8 @@ function(module, unit, makeMaxHeap, popMaxHeap, pushMaxHeap, sortMaxHeap){
 			eval(t.ASSERT("t.unify(a, b)"));
 		},
 		function test_maxHeap_push_external(t){
-			var push = pushMaxHeap(less).compile();
-			var pop  = popMaxHeap(less).compile();
+			var push = pushHeap(less).compile();
+			var pop  = popHeap(less).compile();
 
 			var heap = [];
 			sample.forEach(function(value){
@@ -103,8 +103,8 @@ function(module, unit, makeMaxHeap, popMaxHeap, pushMaxHeap, sortMaxHeap){
 			eval(t.ASSERT("t.unify(a, b)"));
 		},
 		function test_maxHeap_sort(t){
-			var make = makeMaxHeap().compile();
-			var sort = sortMaxHeap().compile();
+			var make = makeHeap().compile();
+			var sort = sortHeap().compile();
 
 			var heap = make(sample.map(identity));
 			sort(heap);
@@ -114,8 +114,8 @@ function(module, unit, makeMaxHeap, popMaxHeap, pushMaxHeap, sortMaxHeap){
 			eval(t.ASSERT("t.unify(a, heap)"));
 		},
 		function test_maxHeap_sort_external(t){
-			var make = makeMaxHeap(less).compile();
-			var sort = sortMaxHeap(less).compile();
+			var make = makeHeap(less).compile();
+			var sort = sortHeap(less).compile();
 
 			var heap = make(sample.map(identity));
 			sort(heap);
