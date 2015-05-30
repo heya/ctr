@@ -11,7 +11,7 @@
 			"    while(__i){",
 			"        var __p = (__i - 1) >> 1, a = __a[__p];",
 			"        #{predCond}",
-			"        if(!(#{lessCond})) break;",
+			"        if(#{lessCond}) break;",
 			"        __a[__i] = a;",
 			"        __a[__p] = b;",
 			"        __i = __p;",
@@ -49,6 +49,9 @@
 			arg  = "";
 			init = "var __a = this." + opt.member + ";";
 			ret  = "this";
+		}
+		if(!opt || !opt.min){
+			cond = "!(" + cond + ")";
 		}
 		return ctr(
 			fTmpl,

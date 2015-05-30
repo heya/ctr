@@ -16,14 +16,14 @@
 			"                if(__c + 1 < __n){",
 			"                    a = __a[__c + 1];",
 			"                    #{predCond}",
-			"                    if(!(#{lessCond})){",
+			"                    if(#{lessCond}){",
 			"                        ++__c;",
 			"                        b = a;",
 			"                    }",
 			"                }",
 			"                a = __a[__i];",
 			"                #{predCond}",
-			"                if(!(#{lessCond})) break;",
+			"                if(#{lessCond}) break;",
 			"                __a[__c] = a;",
 			"                __a[__i] = b;",
 			"            }",
@@ -62,6 +62,9 @@
 			arg  = "";
 			init = "var __a = this." + opt.member + ";";
 			ret  = "this";
+		}
+		if(!opt || !opt.min){
+			cond = "!(" + cond + ")";
 		}
 		return ctr(
 			fTmpl,

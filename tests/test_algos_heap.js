@@ -166,6 +166,153 @@ function(module, unit, makeHeap, popHeap, pushHeap, sortHeap){
 			});
 			heap.sort();
 			eval(t.TEST("t.unify(sorted, heap.array)"));
+		},
+		function test_minHeap_make(t){
+			var make = makeHeap(null, {min: true}).compile();
+			var heap = make(sample.map(identity));
+			walk(heap, function(heap, index){
+				var l = 2 * index + 1, r = l + 1;
+				t.assert(l >= heap.length || heap[index] <= heap[l], "left child is smaller than its parent");
+				t.assert(r >= heap.length || heap[index] <= heap[r], "right child is smaller than its parent");
+			});
+		},
+		function test_minHeap_make_external(t){
+			var make = makeHeap(less, {min: true}).compile();
+			var heap = make(sample.map(identity));
+			walk(heap, function(heap, index){
+				var l = 2 * index + 1, r = l + 1;
+				t.assert(l >= heap.length || heap[index] <= heap[l], "left child is smaller than its parent");
+				t.assert(r >= heap.length || heap[index] <= heap[r], "right child is smaller than its parent");
+			});
+		},
+		function test_minHeap_pop(t){
+			var make = makeHeap(null, {min: true}).compile();
+			var pop  = popHeap (null, {min: true}).compile();
+			var heap = make(sample.map(identity));
+
+			var a = sample.map(identity).sort(cmpNum);
+
+			var b = [];
+			while(heap.length){
+				b.push(pop(heap));
+			}
+
+			eval(t.ASSERT("t.unify(a, b)"));
+		},
+		function test_minHeap_pop_external(t){
+			var make = makeHeap(less, {min: true}).compile();
+			var pop  = popHeap (less, {min: true}).compile();
+			var heap = make(sample.map(identity));
+
+			var a = sample.map(identity).sort(cmpNum);
+
+			var b = [];
+			while(heap.length){
+				b.push(pop(heap));
+			}
+
+			eval(t.ASSERT("t.unify(a, b)"));
+		},
+		function test_minHeap_push(t){
+			var push = pushHeap(null, {min: true}).compile();
+			var pop  = popHeap (null, {min: true}).compile();
+
+			var heap = [];
+			sample.forEach(function(value){
+				push(heap, value);
+			});
+
+			var a = sample.map(identity).sort(cmpNum);
+
+			var b = [];
+			while(heap.length){
+				b.push(pop(heap));
+			}
+
+			eval(t.ASSERT("t.unify(a, b)"));
+		},
+		function test_minHeap_push_external(t){
+			var push = pushHeap(less, {min: true}).compile();
+			var pop  = popHeap (less, {min: true}).compile();
+
+			var heap = [];
+			sample.forEach(function(value){
+				push(heap, value);
+			});
+
+			var a = sample.map(identity).sort(cmpNum);
+
+			var b = [];
+			while(heap.length){
+				b.push(pop(heap));
+			}
+
+			eval(t.ASSERT("t.unify(a, b)"));
+		},
+		function test_minHeap_sort(t){
+			var make = makeHeap(null, {min: true}).compile();
+			var sort = sortHeap(null, {min: true}).compile();
+
+			var heap = make(sample.map(identity));
+			sort(heap);
+
+			var a = sample.map(identity).sort(cmpNum).reverse();
+
+			eval(t.ASSERT("t.unify(a, heap)"));
+		},
+		function test_minHeap_sort_external(t){
+			var make = makeHeap(less, {min: true}).compile();
+			var sort = sortHeap(less, {min: true}).compile();
+
+			var heap = make(sample.map(identity));
+			sort(heap);
+
+			var a = sample.map(identity).sort(cmpNum).reverse();
+
+			eval(t.ASSERT("t.unify(a, heap)"));
+		},
+		function test_minHeap_object(t){
+			function MinHeap(a){
+				if(a){
+					this.init(a);
+				}else{
+					this.array = [];
+				}
+			}
+
+			var make = makeHeap(null, {member: "array", min: true}).compile();
+			var push = pushHeap(null, {member: "array", min: true}).compile();
+			var pop  = popHeap (null, {member: "array", min: true}).compile();
+			var sort = sortHeap(null, {member: "array", min: true}).compile();
+
+			MinHeap.prototype = {
+				init: function(a){
+					this.array = a.map(identity);
+					return this._make();
+				},
+				empty: function(){ return !this.array.length; },
+				push:  push,
+				pop:   pop,
+				sort:  sort,
+				_make: make
+			};
+
+			var sorted = sample.map(identity).sort(cmpNum);
+
+			var heap = new MinHeap(sample);
+
+			var a = [];
+			while(!heap.empty()){
+				a.push(heap.pop());
+			}
+			eval(t.TEST("t.unify(sorted, a)"));
+
+			sample.forEach(function(value){
+				heap.push(value);
+			});
+			heap.sort();
+			sorted.reverse();
+			eval(t.TEST("t.unify(sorted, heap.array)"));
 		}
 	]);
 
