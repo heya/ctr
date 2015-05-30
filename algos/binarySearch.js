@@ -48,10 +48,14 @@
 				decision = ctr(dTmpl1, {lessCond: less}).lines;
 				break;
 			default: // Array
-				last = less.length - 1;
-				decision = less.slice(0, last).concat(
-					ctr(dTmpl1, {lessCond: less[last]}).lines
-				);
+				if(less instanceof Array){
+					last = less.length - 1;
+					decision = less.slice(0, last).concat(
+						ctr(dTmpl1, {lessCond: less[last]}).lines
+					);
+				}else{
+					decision = ctr(dTmpl1, {lessCond: "a < b"}).lines;
+				}
 				break;
 		}
 		if(opt && opt.fail){

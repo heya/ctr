@@ -7,7 +7,7 @@ function(module, unit, bsearch){
 
 	unit.add(module, [
 		function test_simple(t){
-			var bs = bsearch("a < b").compile();
+			var bs = bsearch().compile();
 
 			eval(t.TEST("bs([], 1) === 0"));
 			eval(t.TEST("bs([], 2) === 0"));
