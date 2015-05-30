@@ -34,7 +34,7 @@
 
 	var uniqNumber = 0;
 
-	return function(less, name){
+	return function(less, opt){
 		var ext, props, pred, cond, last;
 		switch(typeof less){
 			case "function":
@@ -61,7 +61,8 @@
 				extInit:  ext,
 				predCond: pred,
 				lessCond: cond,
-				name:     name || ("/algos/heap/pop" + (uniqNumber++))
+				name:     (typeof opt == "string" && opt) || (opt && opt.name) ||
+							("/algos/heap/pop" + (uniqNumber++))
 			},
 			props
 		);
